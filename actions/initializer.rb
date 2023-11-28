@@ -1,8 +1,8 @@
-require './github_api_client'
-require './slack_client'
 require 'faraday'
 require 'json'
 require 'time'
+require '/actions/github_api_client'
+require '/actions/slack_client'
 
 keys = %w(GITHUB_BASE_URL GITHUB_TOKEN SLACK_WEBHOOK LIMIT_DAYS NOTIFY_TEMPLATE CLOSED_TEMPLATE)
 keys.each do |key|
