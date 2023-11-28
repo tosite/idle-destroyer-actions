@@ -1,4 +1,5 @@
-require './actions/github_api_client'
+require './github_api_client'
+require './slack_client'
 require 'faraday'
 require 'json'
 require 'time'

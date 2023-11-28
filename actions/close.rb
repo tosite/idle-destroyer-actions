@@ -1,4 +1,4 @@
-require './actions/initializer'
+require './initializer'
 
 client = GitHubApiClient.new(base_url: GITHUB_BASE_URL, token: TOKEN, ignore_labels: IGNORE_LABELS)
 targets = client.fetch_old_issues_and_pulls(limit: LIMIT)
