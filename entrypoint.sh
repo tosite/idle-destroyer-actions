@@ -1,4 +1,4 @@
 #!/bin/sh -l
 
-gem install faraday json time
+gem install faraday
 php "/actions/$1.rb"
