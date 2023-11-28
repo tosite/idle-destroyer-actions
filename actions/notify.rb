@@ -1,3 +1,4 @@
+pp system('pwd')
 require './initializer'
 
 client = GitHubApiClient.new(base_url: GITHUB_BASE_URL, token: TOKEN, ignore_labels: IGNORE_LABELS)
