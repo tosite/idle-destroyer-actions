@@ -1,0 +1,38 @@
+class SlackClient
+  @webhook_url = ''
+  def initialize(webhook_url:)
+    @webhook_url = webhook_url
+  end
+
+  def build_message(template, issues, pulls)
+    issue_link = issues.map { "<#{_1[:url]}|#{_1[:title]}>" }.join("\n")
+    pull_link = pulls.map { "<#{_1[:url]}|#{_1[:title]}>" }.join("\n")
+    template.gsub!(/%ISSUES%/, issue_link)
+    template.gsub!(/%PULLS%/, pull_link)
+    template
+  end
+
+  def send_slack_message(template, issues, pulls)
+
+    payload = {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": build_message(template, issues, pulls)
+      }
+    }
+
+    conn = Faraday.new(url: @webhook_url)
+    response = conn.post do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.body = payload.to_json
+    end
+
+    if response.success?
+      puts 'Slack message sent successfully!'
+    else
+      puts 'Failed to send Slack message.'
+    end
+  end
+
+end

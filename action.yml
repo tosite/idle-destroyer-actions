@@ -1,0 +1,51 @@
+name: 'idle destroyer action'
+description: 'This action is used to detect releases from Github pull request labels.'
+inputs:
+  githubToken:
+    description: 'GITHUB_TOKEN'
+    default: ${{ github.token }}
+  action:
+    description: 'entrypoint(notify|close)'
+  ignoreLabels:
+    description: 'After merged label(labelA, labelB)'
+    default: ''
+  baseUrl:
+    description: 'Base URL for GitHub API'
+    default: "https://api.github.com/repos"
+  repo:
+    description: '{owner}/{repo}'
+    default: "${{ github.repository }}"
+  slackWebhook:
+    description: 'SLACK_WEBHOOK'
+  notifyTemplate:
+    description: ''
+    default: |
+      *Will close issues*
+      %ISSUES%
+
+      *Will close pull_requests*
+      %PULLS%
+  closedTemplate:
+    description: ''
+    default: |
+      *Closed issues*
+      %ISSUES%
+
+      *Closed pull_requests*
+      %PULLS%
+  limitDays:
+    description: ''
+    default: '180'
+runs:
+  using: 'docker'
+  image: 'Dockerfile'
+  args:
+    - ${{ inputs.action }}
+  env:
+    GITHUB_TOKEN: ${{ inputs.githubToken }}
+    SLACK_WEBHOOK: ${{ inputs.slackWebhook }}
+    NOTIFY_TEMPLATE: ${{ inputs.notifyTemplate }}
+    CLOSED_TEMPLATE: ${{ inputs.closedTemplate }}
+    IGNORE_LABELS: ${{ inputs.ignoreLabels }}
+    GITHUB_BASE_URL: ${{ inputs.baseUrl }}
+    LIMIT_DAYS: ${{ inputs.limitDays }}
