@@ -33,10 +33,6 @@ class SlackClient
       ]
     }
 
-    puts '---- message -------------------'
-    pp payload
-    puts '--------------------------------'
-
     conn = Faraday.new(url: @webhook_url)
     response = conn.post do |req|
       req.headers['Content-Type'] = 'application/json'

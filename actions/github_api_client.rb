@@ -55,6 +55,7 @@ class GitHubApiClient
         title: _1['title'],
         create_user: _1['user']['login'],
         is_pr: _1.key?('pull_request'),
+        labels: _1['labels'].map { |l| l['name'] },
         dates_not_updated: (Date.today - Date.parse(_1['updated_at'])).to_i
       }
     end
