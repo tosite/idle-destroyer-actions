@@ -5,11 +5,14 @@ require '/actions/github_api_client'
 require '/actions/slack_client'
 
 keys = %w(GITHUB_BASE_URL GITHUB_TOKEN SLACK_WEBHOOK LIMIT_DAYS NOTIFY_TEMPLATE CLOSED_TEMPLATE)
+puts '---- envs ----------------------'
 keys.each do |key|
   if ENV[key].empty?
     raise "key: #{key} is not specified.abort."
   end
+  pp ENV[key]
 end
+puts '--------------------------------'
 
 GITHUB_BASE_URL = ENV['GITHUB_BASE_URL']
 TOKEN = ENV['GITHUB_TOKEN']
