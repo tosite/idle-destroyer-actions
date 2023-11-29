@@ -32,16 +32,16 @@ class SlackClient
     pp payload
     puts '--------------------------------'
 
-    # conn = Faraday.new(url: @webhook_url)
-    # response = conn.post do |req|
-    #   req.headers['Content-Type'] = 'application/json'
-    #   req.body = payload.to_json
-    # end
-    #
-    # if response.success?
-    #   puts 'Slack message sent successfully!'
-    # else
-    #   raise "Failed to send Slack message.(#{response.body})"
-    # end
+    conn = Faraday.new(url: @webhook_url)
+    response = conn.post do |req|
+      req.headers['Content-Type'] = 'application/json'
+      req.body = payload.to_json
+    end
+
+    if response.success?
+      puts 'Slack message sent successfully!'
+    else
+      raise "Failed to send Slack message.(#{response.body})"
+    end
   end
 end
