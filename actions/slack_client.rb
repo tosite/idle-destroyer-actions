@@ -20,7 +20,6 @@ class SlackClient
 
   def send_slack_message(template, issues, pulls)
     payload = {
-      "text": "Result: :apple:",
       "attachments": [
         {
           "text": build_message(template, issues, pulls),
