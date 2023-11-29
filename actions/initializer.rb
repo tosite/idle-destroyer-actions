@@ -10,6 +10,7 @@ keys.each do |key|
   if ENV[key].empty?
     raise "key: #{key} is not specified.abort."
   end
+  pp "[key: #{key}]"
   pp ENV[key]
 end
 puts '--------------------------------'

@@ -23,6 +23,7 @@ class GitHubApiClient
   def fetch_old_issues_and_pulls(limit:)
     page = 1
     old_issues = []
+    puts "REQUEST URL: #{@base_url}/issues"
     loop do
       response = conn.get('issues', { state: 'open', per_page: 100, page: page }, @headers)
       issues = JSON.parse(response.body)
@@ -35,6 +36,7 @@ class GitHubApiClient
 
   def close(row)
     uri = row[:is_pr] ? "pulls/#{row[:number]}" : "issues/#{row[:number]}"
+    puts "REQUEST URL: #{@base_url}/#{uri}"
     res = conn.patch(uri, { state: 'closed' }.to_json, @headers)
     res.status
   end
