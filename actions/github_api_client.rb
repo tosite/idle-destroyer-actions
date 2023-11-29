@@ -29,10 +29,9 @@ class GitHubApiClient
       rows = JSON.parse(response.body)
       break if response.status != 200 || rows.empty?
       targets << rows.select { |row|
-        row['updated_at'] < limit && !row['labels'].any? { |label|
-          puts label['name']
-          @ignore_labels.include?(label['name'])
-        }
+        is_target = row['updated_at'] < limit && !row['labels'].any? { |label| @ignore_labels.include?(label['name']) }
+        puts "#{row['title']} is not target.skip." unless is_target
+        is_target
       }
       page += 1
     end

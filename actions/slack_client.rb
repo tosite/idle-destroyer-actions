@@ -13,9 +13,10 @@ class SlackClient
     pull_link = pulls.empty? ? 'Noting' : pulls.join("\n")
     pp pull_link
     puts '--------------------------------'
-    t = template.gsub(/%ISSUES%/, issue_link)
-    t.gsub!(/%PULLS%/, pull_link)
-    t
+    template.gsub(/%ISSUES%/, issue_link)
+            .gsub(/%PULLS%/, pull_link)
+            .gsub(/%LIMIT%/, LIMIT)
+            .gsub(/%IGNORE_LABELS%/, IGNORE_LABELS.join(', '))
   end
 
   def send_slack_message(template, issues, pulls)

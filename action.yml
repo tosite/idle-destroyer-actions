@@ -18,8 +18,14 @@ inputs:
   slackWebhook:
     description: 'SLACK_WEBHOOK'
   notifyTemplate:
-    description: ''
+    description: |
+      You can edit the template for notifications. 
+      The following variables can be specified:%ISSUES%, %PULLS%, %LIMIT%, %IGNORE_LABELS%
+      Similarly, if you want to mentions it, specify it.(e.g. <@USER_ID>|<!here>|<!channel>)
     default: |
+      The next target is the one that will be automatically closed since %LIMIT% days have elapsed.
+      If you do not want to delete it, give it a label (%IGNORE_LABELS%).
+
       *Will close issues*
       %ISSUES%
 
