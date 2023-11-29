@@ -22,6 +22,8 @@ class SlackClient
     payload = {
       "attachments": [
         {
+          "mrkdwn_in": ["text"],
+          "color": "warning",
           "text": build_message(template, issues, pulls),
           "footer": "https://github.com/tosite/idle-destroyer-actions",
         }
