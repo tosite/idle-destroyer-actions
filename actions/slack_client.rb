@@ -28,7 +28,7 @@ class SlackClient
       req.body = payload.to_json
     end
 
-    pp response
+    pp response.body
     if response.success?
       puts 'Slack message sent successfully!'
     else
