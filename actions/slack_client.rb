@@ -23,16 +23,8 @@ class SlackClient
       "text": "Result: :apple:",
       "attachments": [
         {
-          "color": "#88D8B0",
-          "blocks": [
-            {
-              "type": "section",
-              "text": {
-                "type": "mrkdwn",
-                "text": build_message(template, issues, pulls)
-              }
-            }
-          ]
+          "text": build_message(template, issues, pulls),
+          "footer": "https://github.com/tosite/idle-destroyer-actions",
         }
       ]
     }
