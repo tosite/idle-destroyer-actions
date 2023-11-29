@@ -48,4 +48,5 @@ runs:
     CLOSED_TEMPLATE: ${{ inputs.closedTemplate }}
     IGNORE_LABELS: ${{ inputs.ignoreLabels }}
     GITHUB_BASE_URL: ${{ inputs.baseUrl }}
+    REPOSITORY: ${{ inputs.repo }}
     LIMIT_DAYS: ${{ inputs.limitDays }}
