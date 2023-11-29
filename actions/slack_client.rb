@@ -8,12 +8,10 @@ class SlackClient
   def build_message(template, issues, pulls)
     puts '---- issues --------------------'
     pp issues
-    issue_link = issues.empty? ? 'Noting' : issues.map { "<#{_1[:url]}|#{_1[:title]}>" }.join("\n")
-    pp issue_link
+    issue_link = issues == '' ? 'Noting' : issues
     puts '---- pulls ---------------------'
     pp pulls
-    pull_link = pulls.empty? ? 'Noting' : pulls.map { "<#{_1[:url]}|#{_1[:title]}>" }.join("\n")
-    pp pull_link
+    pull_link = pulls.empty? ? 'Noting' : pulls
     puts '--------------------------------'
     t = template.gsub(/%ISSUES%/, issue_link)
     t.gsub!(/%PULLS%/, pull_link)
