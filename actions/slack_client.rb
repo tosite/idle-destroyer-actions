@@ -1,5 +1,6 @@
 class SlackClient
   @webhook_url = ''
+
   def initialize(webhook_url:)
     @webhook_url = webhook_url
   end
@@ -15,11 +16,22 @@ class SlackClient
   def send_slack_message(template, issues, pulls)
 
     payload = {
-      "type": "section",
-      "text": {
-        "type": "mrkdwn",
-        "text": build_message(template, issues, pulls)
-      }
+      "text": "Result: :apple:",
+      "blocks": [],
+      "attachments": [
+        {
+          "color": "#00FF00",
+          "blocks": [
+            {
+              "type": "section",
+              "text": {
+                "type": "mrkdwn",
+                "text": build_message(template, issues, pulls)
+              }
+            }
+          ]
+        }
+      ]
     }
 
     conn = Faraday.new(url: @webhook_url)
