@@ -23,10 +23,8 @@ class SlackClient
     message = build_message(template, issues, pulls)
     payload = {
       "text": "Result: :apple:",
-      "blocks": [],
       "attachments": [
         {
-          "color": "#00FF00",
           "blocks": [
             {
               "type": "section",
