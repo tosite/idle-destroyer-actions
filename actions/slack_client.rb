@@ -25,6 +25,8 @@ class SlackClient
           "mrkdwn_in": ["text"],
           "color": "warning",
           "text": build_message(template, issues, pulls),
+          "parse": 'none',
+          "as_user": true,
           "footer": "https://github.com/tosite/idle-destroyer-actions",
         }
       ]
