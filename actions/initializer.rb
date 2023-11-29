@@ -4,12 +4,18 @@ require 'time'
 require '/actions/github_api_client'
 require '/actions/slack_client'
 
-keys = %w(GITHUB_BASE_URL REPOSITORY GITHUB_TOKEN SLACK_WEBHOOK LIMIT_DAYS NOTIFY_TEMPLATE CLOSED_TEMPLATE)
-puts '---- envs ----------------------'
-keys.each do |key|
+required_keys = %w(GITHUB_BASE_URL REPOSITORY GITHUB_TOKEN SLACK_WEBHOOK)
+optional_keys = %w(NOTIFY_TEMPLATE CLOSED_TEMPLATE IGNORE_LABELS LIMIT_DAYS)
+puts '---- required envs -------------'
+required_keys.each do |key|
   if ENV[key].empty?
     raise "key: #{key} is not specified.abort."
   end
+  puts "[key: #{key}]"
+  pp ENV[key]
+end
+puts '---- optional envs -------------'
+optional_keys.each do |key|
   puts "[key: #{key}]"
   pp ENV[key]
 end

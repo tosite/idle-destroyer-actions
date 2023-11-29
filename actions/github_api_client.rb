@@ -22,16 +22,21 @@ class GitHubApiClient
 
   def fetch_old_issues_and_pulls(limit:)
     page = 1
-    old_issues = []
+    targets = []
     puts "REQUEST URL: #{@base_url}/issues"
     loop do
       response = conn.get('issues', { state: 'open', per_page: 100, page: page }, @headers)
-      issues = JSON.parse(response.body)
-      break if response.status != 200 || issues.empty?
-      old_issues << issues.select { |issue| issue['updated_at'] < limit && !issue['labels'].any? { |label| @ignore_labels.include?(label['name']) } }
+      rows = JSON.parse(response.body)
+      break if response.status != 200 || rows.empty?
+      targets << rows.select { |row|
+        row['updated_at'] < limit && !row['labels'].any? { |label|
+          puts label['name']
+          @ignore_labels.include?(label['name'])
+        }
+      }
       page += 1
     end
-    compressed_response(old_issues.flatten)
+    compressed_response(targets.flatten)
   end
 
   def close(row)
