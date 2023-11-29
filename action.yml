@@ -26,10 +26,10 @@ inputs:
       The next target is the one that will be automatically closed since %LIMIT% days have elapsed.
       If you do not want to delete it, give it a label (%IGNORE_LABELS%).
 
-      *Will close issues*
+      *Issues to be closed*
       %ISSUES%
 
-      *Will close pull_requests*
+      *Pull requests to be closed*
       %PULLS%
   closedTemplate:
     description: ''
@@ -40,7 +40,7 @@ inputs:
       *Closed pull_requests*
       %PULLS%
   limitDays:
-    description: ''
+    description: 'Specify the number of days without update.'
     default: '180'
 runs:
   using: 'docker'
