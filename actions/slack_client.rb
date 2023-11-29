@@ -6,8 +6,15 @@ class SlackClient
   end
 
   def build_message(template, issues, pulls)
-    issue_link = issues.map { "<#{_1[:url]}|#{_1[:title]}>" }.join("\n")
-    pull_link = pulls.map { "<#{_1[:url]}|#{_1[:title]}>" }.join("\n")
+    issue_link = issues.empty? ? 'Noting' : issues.map { "<#{_1[:url]}|#{_1[:title]}>" }.join("\n")
+    pull_link = pulls.empty? ? 'Noting' : pulls.map { "<#{_1[:url]}|#{_1[:title]}>" }.join("\n")
+    puts '---- issues --------------------'
+    pp issues
+    pp issue_link
+    puts '---- pulls ---------------------'
+    pp pulls
+    pp pull_link
+    puts '--------------------------------'
     t = template.gsub(/%ISSUES%/, issue_link)
     t.gsub!(/%PULLS%/, pull_link)
     t
@@ -40,12 +47,10 @@ class SlackClient
       req.body = payload.to_json
     end
 
-    pp response.body
     if response.success?
       puts 'Slack message sent successfully!'
     else
-      puts 'Failed to send Slack message.'
+      raise "Failed to send Slack message.(#{response.body})"
     end
   end
-
 end
