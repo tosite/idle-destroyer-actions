@@ -32,16 +32,14 @@ class GitHubApiClient
       rows = JSON.parse(response.body)
       break if response.status != 200 || rows.empty?
       targets << rows.select { |row|
-        puts '---- term'
-        pp "#{row['updated_at']} < #{limit}"
-        outside_term = row['updated_at'] < limit
-        puts '---- labels'
-        has_not_exclusion_label = !row['labels'].any? { |label|
-          pp label['name']
+        pp "term: #{row['updated_at']} < #{limit}"
+        pp "labels: #{row['labels'].map { _1['name'] }.join(', ')}"
+        within_term = limit < row['updated_at']
+        has_exclusion_label = row['labels'].any? { |label|
           @ignore_labels.include?(label['name'])
         }
-        is_target = outside_term && has_not_exclusion_label
-        puts "#{row['title']} is not target.skip.(outside_term: #{outside_term}, has_not_exclusion_label: #{has_not_exclusion_label})" unless is_target
+        is_target = !within_term && !has_exclusion_label
+        puts "#{row['title']} is not target.skip.(within_term: #{within_term}, has_exclusion_label: #{has_exclusion_label})" unless is_target
         is_target
       }
       page += 1
