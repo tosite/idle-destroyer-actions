@@ -15,4 +15,7 @@ targets.each do|target|
   end
 end
 
-SlackClient.new(webhook_url: SLACK_WEBHOOK_URL).send_slack_message(CLOSED_TEMPLATE, closed_issues, closed_pulls)
+issues = closed_issues.map { "<#{_1[:url]}|#{_1[:title]}> - #{_1[:dates_not_updated]} days ago"}
+pulls = closed_pulls.map { "<#{_1[:url]}|#{_1[:title]}> - #{_1[:dates_not_updated]} days ago"}
+
+SlackClient.new(webhook_url: SLACK_WEBHOOK_URL).send_slack_message(CLOSED_TEMPLATE, issues, pulls)
