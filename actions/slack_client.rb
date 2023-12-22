@@ -15,7 +15,7 @@ class SlackClient
     puts '--------------------------------'
     template.gsub(/%ISSUES%/, issue_link)
             .gsub(/%PULLS%/, pull_link)
-            .gsub(/%LIMIT%/, Time.parse(LIMIT).strftime('%F'))
+            .gsub(/%LIMIT%/, ENV['LIMIT_DAYS'])
             .gsub(/%IGNORE_LABELS%/, IGNORE_LABELS.join(', '))
   end
 
