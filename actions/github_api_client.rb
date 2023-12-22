@@ -24,20 +24,22 @@ class GitHubApiClient
     page = 1
     targets = []
     puts "REQUEST URL: #{@base_url}/issues"
+    puts '---- ignore_labels'
+    pp @ignore_labels
+    puts '----'
     loop do
       response = conn.get('issues', { state: 'open', per_page: 100, page: page }, @headers)
       rows = JSON.parse(response.body)
       break if response.status != 200 || rows.empty?
       targets << rows.select { |row|
+        puts '---- term'
+        pp "#{row['updated_at']} < #{limit}"
         outside_term = row['updated_at'] < limit
-        puts '---- ignore_labels'
-        pp @ignore_labels
         puts '---- labels'
         has_not_exclusion_label = !row['labels'].any? { |label|
           pp label['name']
           @ignore_labels.include?(label['name'])
         }
-        puts '----'
         is_target = outside_term && has_not_exclusion_label
         puts "#{row['title']} is not target.skip.(outside_term: #{outside_term}, has_not_exclusion_label: #{has_not_exclusion_label})" unless is_target
         is_target
