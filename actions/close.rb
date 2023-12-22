@@ -6,8 +6,8 @@ targets = client.fetch_old_issues_and_pulls(limit: LIMIT)
 closed_issues = []
 closed_pulls = []
 targets.each do|target|
-  # res = client.close(target)
-  # next if res != 200
+  res = client.close(target)
+  next if res != 200
   if target[:is_pr]
     closed_pulls << target
   else
